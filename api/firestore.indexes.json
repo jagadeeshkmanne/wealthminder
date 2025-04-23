@@ -1,0 +1,20 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "navHistory",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "schemeCode", "order": "ASCENDING" },
+        { "fieldPath": "navDate", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "investments",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "units", "order": "ASCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
