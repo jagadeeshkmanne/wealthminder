@@ -1,3 +1,5 @@
+// src/core/providers/NotificationProvider.tsx
+
 import React, { createContext, useContext, useState, useCallback } from 'react';
 
 // Types for notification

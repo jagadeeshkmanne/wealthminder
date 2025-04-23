@@ -1,3 +1,5 @@
+// src/core/hooks/useAuth.ts
+
 import { useAuth as useAuthContext } from '@/core/providers/AuthProvider';
 
 /**

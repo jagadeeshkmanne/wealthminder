@@ -1,3 +1,5 @@
+// src/core/hooks/useClickOutside.ts
+
 import { useEffect, RefObject } from 'react';
 
 /**

@@ -1,3 +1,5 @@
+// src/core/providers/ThemeProvider.tsx
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 type ThemeMode = 'light' | 'dark';

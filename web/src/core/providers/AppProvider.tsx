@@ -1,3 +1,5 @@
+// src/core/providers/AppProvider.tsx
+
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';

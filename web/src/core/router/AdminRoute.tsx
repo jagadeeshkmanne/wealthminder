@@ -1,3 +1,4 @@
+// src/core/router/AdminRoute.tsx
 import React, { useState, useEffect } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '@/core/hooks/useAuth';
