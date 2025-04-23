@@ -6,7 +6,7 @@ interface IconProps {
   className?: string;
 }
 
-const IconInvestment: React.FC<IconProps> = ({
+const IconGoal: React.FC<IconProps> = ({
   size = 24,
   color = 'currentColor',
   className = '',
@@ -22,12 +22,13 @@ const IconInvestment: React.FC<IconProps> = ({
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={`feather feather-dollar-sign ${className}`}
+      className={`feather feather-target ${className}`}
     >
-      <line x1="12" y1="1" x2="12" y2="23"></line>
-      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+      <circle cx="12" cy="12" r="10"></circle>
+      <circle cx="12" cy="12" r="6"></circle>
+      <circle cx="12" cy="12" r="2"></circle>
     </svg>
   );
 };
 
-export default IconInvestment;
+export default IconGoal;
