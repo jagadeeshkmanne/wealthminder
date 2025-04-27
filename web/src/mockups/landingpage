@@ -1,0 +1,625 @@
+import React, { useState } from 'react';
+import {
+  Target, LogIn, Heart, Menu, X, ChevronRight,
+  PieChart, BarChart2, RefreshCw, Calendar,
+  Users, TrendingUp, ArrowUpRight, ArrowDownRight,
+  Shield, Clock, Filter, DollarSign, Percent
+} from 'lucide-react';
+
+const WealthMinderLanding = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // App features
+  const features = [
+    {
+      icon: <PieChart className="h-5 w-5 text-blue-400" />,
+      title: 'Smart Portfolio Management',
+      description: 'Create multiple portfolios with target allocation strategies. Monitor your investment mix and get actionable insights.'
+    },
+    {
+      icon: <BarChart2 className="h-5 w-5 text-green-400" />,
+      title: 'Performance Analytics',
+      description: 'Track detailed performance metrics including XIRR, absolute returns, and annualized returns across customizable time periods.'
+    },
+    {
+      icon: <Target className="h-5 w-5 text-yellow-400" />,
+      title: 'Goal-Based Planning',
+      description: 'Set financial goals for retirement, education, home purchase and more. Track progress and get portfolio recommendations.'
+    },
+    {
+      icon: <RefreshCw className="h-5 w-5 text-purple-400" />,
+      title: 'Intelligent Rebalancing',
+      description: 'Receive timely alerts when your portfolio drifts from target allocations, with specific buy/sell recommendations.'
+    },
+    {
+      icon: <Calendar className="h-5 w-5 text-pink-400" />,
+      title: 'SIP & Lumpsum Planning',
+      description: 'Plan systematic and lumpsum investments to reach your financial goals with intelligent allocation recommendations.'
+    },
+    {
+      icon: <Users className="h-5 w-5 text-indigo-400" />,
+      title: 'Portfolio Sharing',
+      description: 'Share portfolios with family members or financial advisors with customized access controls.'
+    }
+  ];
+
+  // Sample portfolio data with metrics calculable from NAV history
+  const topPortfolios = [
+    {
+      id: 1,
+      name: 'High Growth Portfolio',
+      owner: 'Rahul Sharma',
+      risk: 'High',
+      fundCount: 6,
+      returns: {
+        '1M': 3.2,
+        '3M': 8.7,
+        '6M': 14.8,
+        '1Y': 23.5,
+        'YTD': 16.4
+      },
+      volatility: 18.6, // Standard deviation of returns (annualized)
+      maxDrawdown: -18.2, // Maximum percentage drop from peak
+      sharpeRatio: 1.26, // Risk-adjusted return measure
+      cagr3Y: 16.8, // 3-year Compound Annual Growth Rate
+      color: 'blue'
+    },
+    {
+      id: 2,
+      name: 'Balanced Growth Portfolio',
+      owner: 'Priya Patel',
+      risk: 'Moderate',
+      fundCount: 8,
+      returns: {
+        '1M': 1.7,
+        '3M': 5.5,
+        '6M': 9.2,
+        '1Y': 16.8,
+        'YTD': 11.3
+      },
+      volatility: 12.4, // Standard deviation of returns (annualized)
+      maxDrawdown: -12.4, // Maximum percentage drop from peak
+      sharpeRatio: 1.35, // Risk-adjusted return measure
+      cagr3Y: 13.2, // 3-year Compound Annual Growth Rate
+      color: 'green'
+    },
+    {
+      id: 3,
+      name: 'Conservative Income Portfolio',
+      owner: 'Amit Kumar',
+      risk: 'Low',
+      fundCount: 5,
+      returns: {
+        '1M': 1.2,
+        '3M': 3.4,
+        '6M': 6.8,
+        '1Y': 11.4,
+        'YTD': 8.2
+      },
+      volatility: 7.6, // Standard deviation of returns (annualized)
+      maxDrawdown: -7.6, // Maximum percentage drop from peak
+      sharpeRatio: 1.50, // Risk-adjusted return measure
+      cagr3Y: 9.7, // 3-year Compound Annual Growth Rate
+      color: 'yellow'
+    }
+  ];
+
+  // Sample top funds data - metrics calculable from NAV history
+  const topFunds = [
+    {
+      id: 1,
+      name: 'HDFC Balanced Advantage Fund',
+      category: 'Hybrid',
+      returns: {
+        '1M': 2.3,
+        '3M': 6.8,
+        '6M': 11.2,
+        '1Y': 18.7,
+        'YTD': 12.9
+      },
+      volatility: 14.3,
+      maxDrawdown: -8.2,
+      sharpeRatio: 1.31,
+      cagr3Y: 14.9,
+      color: 'blue'
+    },
+    {
+      id: 2,
+      name: 'Axis Flexi Cap Fund',
+      category: 'Equity',
+      returns: {
+        '1M': 3.1,
+        '3M': 9.2,
+        '6M': 14.8,
+        '1Y': 22.5,
+        'YTD': 17.4
+      },
+      volatility: 16.8,
+      maxDrawdown: -12.5,
+      sharpeRatio: 1.34,
+      cagr3Y: 17.2,
+      color: 'green'
+    },
+    {
+      id: 3,
+      name: 'SBI Conservative Hybrid Fund',
+      category: 'Hybrid',
+      returns: {
+        '1M': 1.4,
+        '3M': 4.2,
+        '6M': 7.9,
+        '1Y': 14.3,
+        'YTD': 10.1
+      },
+      volatility: 9.4,
+      maxDrawdown: -6.4,
+      sharpeRatio: 1.52,
+      cagr3Y: 11.6,
+      color: 'yellow'
+    },
+    {
+      id: 4,
+      name: 'ICICI Prudential Value Discovery Fund',
+      category: 'Equity',
+      returns: {
+        '1M': 2.6,
+        '3M': 7.9,
+        '6M': 12.7,
+        '1Y': 19.8,
+        'YTD': 15.5
+      },
+      volatility: 15.7,
+      maxDrawdown: -15.2,
+      sharpeRatio: 1.26,
+      cagr3Y: 15.9,
+      color: 'purple'
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-900 text-gray-100">
+      {/* Header */}
+      <header className="sticky top-0 z-20 bg-gray-800 border-b border-gray-700 shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16 items-center">
+            <div className="flex items-center">
+              <div className="flex-shrink-0 flex items-center">
+                <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white p-2 rounded-lg">
+                  <Target size={20} strokeWidth={2} />
+                </div>
+                <span className="ml-2 text-xl font-bold text-white">Wealth <span className="text-blue-400">Minder</span></span>
+              </div>
+
+              <div className="hidden md:ml-10 md:flex md:items-center md:space-x-4">
+                <a href="#features" className="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">Features</a>
+                <a href="#portfolios" className="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">Top Portfolios</a>
+                <a href="#funds" className="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">Top Funds</a>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-3">
+              <button className="hidden md:flex items-center px-4 py-2 border border-pink-500 rounded-md shadow-sm text-sm font-medium text-white bg-pink-700 hover:bg-pink-600 focus:outline-none">
+                <Heart size={16} className="mr-2" />
+                Support
+              </button>
+
+              <button className="flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+                <LogIn size={16} className="mr-2" />
+                Login
+              </button>
+
+              <button
+                className="md:hidden p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                {mobileMenuOpen ? (
+                  <X size={24} />
+                ) : (
+                  <Menu size={24} />
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-800 border-b border-gray-700">
+              <a href="#features" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Features</a>
+              <a href="#portfolios" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Top Portfolios</a>
+              <a href="#funds" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Top Funds</a>
+              <button className="mt-1 w-full flex items-center justify-center px-3 py-2 border border-pink-500 rounded-md text-base font-medium text-white bg-pink-700 hover:bg-pink-600">
+                <Heart size={16} className="mr-2" />
+                Support
+              </button>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* Hero Section */}
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/30 to-transparent"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="mb-6">
+              <Target size={64} className="inline-block text-blue-400 mb-4" />
+            </div>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-8">
+              <span className="text-white">Wealth </span>
+              <span className="text-blue-400">Minder</span>
+            </h1>
+            <p className="text-xl text-gray-300">
+              Track, analyze, and optimize your mutual fund investments with goal-based financial planning and automated rebalancing.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Features Section */}
+      <div id="features" className="py-12 bg-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">Powerful Investment Management Tools</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Everything you need to manage your investments and reach your financial goals
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <div key={index} className="bg-gray-750 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-all duration-300">
+                <div className="flex items-center mb-3">
+                  <div className="h-10 w-10 rounded-lg bg-gray-800 flex items-center justify-center">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-lg font-medium text-white ml-3">{feature.title}</h3>
+                </div>
+                <p className="text-gray-300">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Top Portfolios Section - With metrics calculable from NAV history */}
+      <div id="portfolios" className="py-12 bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">Top Performing Portfolios</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Expertly crafted portfolios with strong historical performance
+            </p>
+          </div>
+
+          {/* Time period selector */}
+          <div className="flex flex-wrap justify-center mb-8 gap-2">
+            <button className="px-3 py-1 bg-gray-700 rounded-md text-gray-300 hover:bg-gray-600">1M</button>
+            <button className="px-3 py-1 bg-gray-700 rounded-md text-gray-300 hover:bg-gray-600">3M</button>
+            <button className="px-3 py-1 bg-blue-600 rounded-md text-white hover:bg-blue-700">6M</button>
+            <button className="px-3 py-1 bg-gray-700 rounded-md text-gray-300 hover:bg-gray-600">1Y</button>
+            <button className="px-3 py-1 bg-gray-700 rounded-md text-gray-300 hover:bg-gray-600">3Y</button>
+            <button className="px-3 py-1 bg-gray-700 rounded-md text-gray-300 hover:bg-gray-600">YTD</button>
+          </div>
+
+          {/* Portfolio Cards - Practical focus on NAV-derived metrics */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {topPortfolios.map((portfolio, index) => (
+              <div key={portfolio.id} className="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 hover:border-blue-500 transition-all duration-300">
+                {/* Portfolio Header */}
+                <div className="p-4 border-b border-gray-700">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <div className={`bg-${portfolio.color}-600/20 p-2 rounded-lg mr-3`}>
+                        <TrendingUp className={`h-5 w-5 text-${portfolio.color}-400`} />
+                      </div>
+                      <div>
+                        <h3 className="text-base font-medium text-white">{portfolio.name}</h3>
+                        <div className={`text-xs text-${portfolio.color}-400 mt-0.5`}>by {portfolio.owner}</div>
+                      </div>
+                    </div>
+                    <div className={`px-2 py-1 rounded text-sm font-medium text-white bg-${portfolio.color}-600/30 flex items-center`}>
+                      <ArrowUpRight size={14} className="mr-1" />
+                      {portfolio.returns['6M']}%
+                    </div>
+                  </div>
+                </div>
+
+                {/* Return metrics */}
+                <div className="px-4 py-3 bg-gray-750">
+                  <div className="text-xs text-gray-400 mb-1 flex justify-between items-center">
+                    <span>Performance (Returns)</span>
+                    <div className="flex items-center">
+                      <Clock size={12} className="mr-1" />
+                      <span>Time Periods</span>
+                    </div>
+                  </div>
+
+                  {/* Period returns row */}
+                  <div className="grid grid-cols-5 gap-1 mb-3">
+                    <div className="bg-gray-800 rounded p-1 text-center">
+                      <div className="text-xs text-gray-400">1M</div>
+                      <div className="text-sm font-medium text-green-400">+{portfolio.returns['1M']}%</div>
+                    </div>
+                    <div className="bg-gray-800 rounded p-1 text-center">
+                      <div className="text-xs text-gray-400">3M</div>
+                      <div className="text-sm font-medium text-green-400">+{portfolio.returns['3M']}%</div>
+                    </div>
+                    <div className="bg-blue-800/30 border border-blue-800 rounded p-1 text-center">
+                      <div className="text-xs text-blue-400">6M</div>
+                      <div className="text-sm font-medium text-green-400">+{portfolio.returns['6M']}%</div>
+                    </div>
+                    <div className="bg-gray-800 rounded p-1 text-center">
+                      <div className="text-xs text-gray-400">1Y</div>
+                      <div className="text-sm font-medium text-green-400">+{portfolio.returns['1Y']}%</div>
+                    </div>
+                    <div className="bg-gray-800 rounded p-1 text-center">
+                      <div className="text-xs text-gray-400">YTD</div>
+                      <div className="text-sm font-medium text-green-400">+{portfolio.returns['YTD']}%</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Risk & metrics section */}
+                <div className="p-4">
+                  <div className="grid grid-cols-2 gap-3 mb-3">
+                    {/* Volatility */}
+                    <div className="bg-gray-750 rounded p-2">
+                      <div className="flex justify-between items-center mb-1">
+                        <div className="text-xs text-gray-400 flex items-center">
+                          <Shield size={10} className="mr-1" />
+                          Volatility
+                        </div>
+                        <div className="text-xs text-gray-300">{portfolio.volatility}%</div>
+                      </div>
+                      <div className="w-full bg-gray-700 h-1 rounded-full">
+                        <div className="bg-blue-500 h-1 rounded-full"
+                             style={{ width: `${Math.min(100, portfolio.volatility * 2.5)}%` }}></div>
+                      </div>
+                    </div>
+
+                    {/* Max Drawdown */}
+                    <div className="bg-gray-750 rounded p-2">
+                      <div className="flex justify-between items-center mb-1">
+                        <div className="text-xs text-gray-400 flex items-center">
+                          <ArrowDownRight size={10} className="mr-1" />
+                          Max Drawdown
+                        </div>
+                        <div className="text-xs text-red-400">{portfolio.maxDrawdown}%</div>
+                      </div>
+                      <div className="w-full bg-gray-700 h-1 rounded-full">
+                        <div className="bg-red-500 h-1 rounded-full"
+                             style={{ width: `${Math.min(100, Math.abs(portfolio.maxDrawdown) * 3)}%` }}></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Additional metrics */}
+                  <div className="grid grid-cols-2 gap-3">
+                    {/* Sharpe Ratio */}
+                    <div className="bg-gray-750 rounded p-2">
+                      <div className="flex justify-between items-center">
+                        <div className="text-xs text-gray-400">Sharpe Ratio</div>
+                        <div className="text-xs text-green-400">{portfolio.sharpeRatio}</div>
+                      </div>
+                    </div>
+
+                    {/* CAGR 3Y */}
+                    <div className="bg-gray-750 rounded p-2">
+                      <div className="flex justify-between items-center">
+                        <div className="text-xs text-gray-400">CAGR (3Y)</div>
+                        <div className="text-xs text-green-400">+{portfolio.cagr3Y}%</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Portfolio info footer */}
+                <div className="px-4 py-3 border-t border-gray-700 flex justify-between items-center">
+                  <div className="text-xs text-gray-400">
+                    {portfolio.fundCount} Funds • {portfolio.risk} Risk
+                  </div>
+                  <button className={`text-${portfolio.color}-400 hover:text-${portfolio.color}-300 text-xs flex items-center`}>
+                    View Details
+                    <ChevronRight size={14} className="ml-1" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <a href="#" className="inline-flex items-center text-blue-400 hover:text-blue-300">
+              View all portfolios
+              <ChevronRight size={16} className="ml-1" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Top Funds Section - With metrics calculable from NAV history */}
+      <div id="funds" className="py-12 bg-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">Top Performing Funds</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Funds with strong returns and reasonable risk profiles
+            </p>
+          </div>
+
+          {/* Filter section */}
+          <div className="flex justify-between items-center mb-6">
+            <div className="flex items-center space-x-2 text-sm text-gray-400">
+              <Filter size={16} className="text-blue-400" />
+              <span>Sort by:</span>
+              <select className="bg-gray-700 border border-gray-600 rounded px-2 py-1 text-white text-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
+                <option>1Y Returns</option>
+                <option>Sharpe Ratio</option>
+                <option>Volatility (Low to High)</option>
+                <option>Max Drawdown</option>
+              </select>
+            </div>
+
+            <div className="flex space-x-2">
+              <button className="px-3 py-1 bg-blue-600 rounded-md text-white hover:bg-blue-700 text-sm">6M</button>
+              <button className="px-3 py-1 bg-gray-700 rounded-md text-gray-300 hover:bg-gray-600 text-sm">1Y</button>
+              <button className="px-3 py-1 bg-gray-700 rounded-md text-gray-300 hover:bg-gray-600 text-sm">3Y</button>
+            </div>
+          </div>
+
+          {/* Fund table */}
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-700 rounded-lg overflow-hidden">
+              <thead className="bg-gray-750">
+                <tr>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Fund Name</th>
+                  <th className="px-3 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">Category</th>
+                  <th className="px-3 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    <div className="flex items-center justify-center">
+                      <span>6M Return</span>
+                      <ArrowUpRight size={12} className="ml-1 text-green-400" />
+                    </div>
+                  </th>
+                  <th className="px-3 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    <div className="flex items-center justify-center">
+                      <span>Volatility</span>
+                      <Percent size={12} className="ml-1 text-blue-400" />
+                    </div>
+                  </th>
+                  <th className="px-3 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    <div className="flex items-center justify-center">
+                      <span>Max DD</span>
+                      <ArrowDownRight size={12} className="ml-1 text-red-400" />
+                    </div>
+                  </th>
+                  <th className="px-3 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">Sharpe</th>
+                  <th className="px-3 py-3 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">CAGR (3Y)</th>
+                </tr>
+              </thead>
+              <tbody className="bg-gray-800 divide-y divide-gray-700">
+                {topFunds.map((fund, index) => (
+                  <tr key={fund.id} className="hover:bg-gray-750">
+                    <td className="px-3 py-3 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className={`bg-${fund.color}-600/20 p-1.5 rounded-lg mr-2 flex-shrink-0`}>
+                          <Shield className={`h-4 w-4 text-${fund.color}-400`} />
+                        </div>
+                        <div className="text-sm font-medium text-white">{fund.name}</div>
+                      </div>
+                    </td>
+                    <td className="px-3 py-3 whitespace-nowrap text-center">
+                      <span className="px-2 py-0.5 text-xs rounded-full bg-gray-700 text-gray-300">
+                        {fund.category}
+                      </span>
+                    </td>
+                    <td className="px-3 py-3 whitespace-nowrap text-center">
+                      <div className="text-sm font-medium text-green-400">+{fund.returns['6M']}%</div>
+                    </td>
+                    <td className="px-3 py-3 whitespace-nowrap text-center">
+                      <div className="flex items-center justify-center">
+                        <div className="text-sm font-medium text-gray-300 mr-1">{fund.volatility}%</div>
+                        <div className="w-12 bg-gray-700 h-1 rounded-full">
+                          <div className="bg-blue-500 h-1 rounded-full"
+                               style={{ width: `${Math.min(100, fund.volatility * 3)}%` }}></div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-3 py-3 whitespace-nowrap text-center">
+                      <div className="flex items-center justify-center">
+                        <div className="text-sm font-medium text-red-400 mr-1">{fund.maxDrawdown}%</div>
+                        <div className="w-12 bg-gray-700 h-1 rounded-full">
+                          <div className="bg-red-500 h-1 rounded-full"
+                               style={{ width: `${Math.min(100, Math.abs(fund.maxDrawdown) * 3)}%` }}></div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-3 py-3 whitespace-nowrap text-center">
+                      <div className="text-sm font-medium text-green-400">{fund.sharpeRatio}</div>
+                    </td>
+                    <td className="px-3 py-3 whitespace-nowrap text-center">
+                      <div className="text-sm font-medium text-green-400">+{fund.cagr3Y}%</div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="text-center mt-8">
+            <a href="#" className="inline-flex items-center text-blue-400 hover:text-blue-300">
+              View all funds
+              <ChevronRight size={16} className="ml-1" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <div className="py-12 bg-gradient-to-b from-blue-900/30 to-gray-900">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">Wealth Minder</h2>
+          <p className="text-xl text-gray-300 mb-4">
+            Your investment tracker and portfolio manager
+          </p>
+          <div className="inline-flex items-center text-blue-400 text-lg">
+            <Target className="mr-2 h-5 w-5" />
+            Focus on your financial goals
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-gray-800 border-t border-gray-700">
+        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex items-center mb-4 md:mb-0">
+              <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white p-1.5 rounded-lg">
+                <Target size={16} strokeWidth={2} />
+              </div>
+              <span className="ml-2 text-lg font-bold text-white">Wealth <span className="text-blue-400">Minder</span></span>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-4">
+              <a href="#features" className="text-gray-300 hover:text-white text-sm">Features</a>
+              <a href="#portfolios" className="text-gray-300 hover:text-white text-sm">Portfolios</a>
+              <a href="#funds" className="text-gray-300 hover:text-white text-sm">Funds</a>
+              <button className="text-gray-300 hover:text-white text-sm flex items-center">
+                <Heart size={14} className="mr-1 text-pink-400" />
+                Support
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-6 border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
+            <div className="text-sm text-gray-400 mb-4 md:mb-0">
+              © 2025 Wealth Minder. All rights reserved.
+            </div>
+            <div className="flex items-center space-x-4">
+              <a
+                href="mailto:contact@example.com"
+                className="text-gray-400 hover:text-white text-sm"
+              >
+                Contact
+              </a>
+              <a
+                href="/privacy"
+                className="text-gray-400 hover:text-white text-sm"
+              >
+                Privacy Policy
+              </a>
+              <a
+                href="/terms"
+                className="text-gray-400 hover:text-white text-sm"
+              >
+                Terms of Use
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default WealthMinderLanding;
